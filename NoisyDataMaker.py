@@ -14,7 +14,7 @@ def is_valid_wav(filepath):
 # Define directory paths with forward slashes (/)
 speech_dir = r'F:\Sound\speech'  # Speech directory
 noise_dir = r'F:\Sound\noise'    # Noise directory
-output_dir = r'F:\Sound\output'  # Output directory
+output_dir = r'F:\Sound\outputnew'  # Output directory
 
 # Create output directory if it doesn't exist
 os.makedirs(output_dir, exist_ok=True)
@@ -65,7 +65,7 @@ for clear_filepath, random_noise_file in zip(speech_files, noise_files):
         audio_with_noise = tf.expand_dims(audio_with_noise, axis=-1)
 
     # Save noisy audio with proper path handling
-    output_filename_noisy = os.path.join(output_dir, f"noisy_{clear_file_code}_{noise_file_code}.wav")
+    output_filename_noisy = os.path.join(output_dir, f"noisy_{clear_file_code}.wav")
 
     # Normalize audio (optional)
     # audio_with_noise /= tf.reduce_max(tf.abs(audio_with_noise))
