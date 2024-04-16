@@ -1,9 +1,10 @@
 # DenseNoiser
-## Test task for VK R&amp;D internship. For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
+## Test task for VK R&amp;D internship. 
+## For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
 
 # Installation
 
-### for Data and pretrained model go to [Yandex Disc](https://disk.yandex.ru/d/dglhBJF_MW0hrQ)
+### For Data and pretrained model go to [Yandex Disc](https://disk.yandex.ru/d/dglhBJF_MW0hrQ)
 
 ### clone repository or download needed files to start training from ground zero. then:
 
