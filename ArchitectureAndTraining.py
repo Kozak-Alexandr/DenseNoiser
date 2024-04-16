@@ -17,12 +17,12 @@ model_name = "DenseNoise"
 block_length = 0.050  
 voice_max_length = int(0.5 / block_length)  
 frame_length = 512
-batch_size = 2048
-epochs = 2
+batch_size = 5000
+epochs = 1
 
 #learning_rate = 0.003#default is 0.001 ---> too long ad seems to be stuck
-optimiser = tf.keras.optimizers.Adam()
-optimiser.learning_rate.assign(0.003)
+optimiser = tf.keras.optimizers.Adadelta()
+#optimiser.learning_rate.assign(0.003)
 
 random.seed(42)
 np.random.seed(42)
@@ -106,6 +106,7 @@ class MySequence(tf.keras.utils.Sequence):
             path_noisy = path_clear.replace("speech", "noise")
             spectNoisy, _, _, _ = audioToTensor(path_noisy)
             spectClear, _, _, _ = audioToTensor(path_clear) 
+            #print(f"batch_x_train: {batch_x_train.shape}, spectNoisy.shape: {spectNoisy.shape}")
             for k in range(0, len(spectNoisy)):
                 batch_x_train[current_size] = spectNoisy[k]
                 batch_y_train[current_size] = spectClear[k]
@@ -115,12 +116,12 @@ class MySequence(tf.keras.utils.Sequence):
         return batch_x_train, batch_y_train
     
 ##### main logic #####
-dataset_path = input()
-#clear_files = glob.glob(r'F:\Sound\output\*wav')
-clear_files = glob.glob(dataset_path)
+
+clear_files = glob.glob(r'F:\Sound\speech\*wav')
 
 x_train = []
 x_train_count = 0
+
 for i, path_clear in enumerate(clear_files):
     spectNoisy, _, _, audioNoisySR = audioToTensor(path_clear)
     x_train.append((path_clear, len(spectNoisy)))
@@ -131,6 +132,12 @@ print("x_train_count:", x_train_count)
 train_data_generator = MySequence(x_train, x_train_count, batch_size, is_noisy=True)
 
 print('Build model...')
+#print(path_clear)
+#print(path_noisy)
+#for noisy, clean in train_data_generator:
+#    print(noisy[0])
+#    break
+
 if os.path.exists(model_name):
     print("Load: " + model_name)
     model = load_model(model_name)
