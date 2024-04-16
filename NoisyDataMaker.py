@@ -22,7 +22,8 @@ for clear_filepath in clean_files:
 
   audio_binary = tf.io.read_file(noise_filepath)
   audio_noise, audioSR_noise = tf.audio.decode_wav(audio_binary)
-  noise_file_code = noise_filepath.replace(f"{noise_dir}\\", "").replace(".wav", "")
+  noise_dir = clean_dir.replace("speech", "noise")  # Assign noise directory based on clean dir
+  noise_file_code = clear_file_code.replace("speech", "noise")  # Replace "speech" with "noise" in code
   print("Load:", noise_filepath, noise_file_code, audioSR_noise)
   audio_noise = tf.squeeze(audio_noise, axis=-1)
 
@@ -40,11 +41,11 @@ for clear_filepath in clean_files:
   audio_string = tf.audio.encode_wav(audio_with_noise, sample_rate=audioSR_clear)
 
   # Save noisy speech with desired naming format
-  noisy_filepath = f"{noise_dir}\\{clear_file_code}_{noise_file_code}.wav"
+  noisy_filepath = f"{noise_dir}\\{noise_file_code}.wav"
   tf.io.write_file(noisy_filepath, contents=audio_string)
   print("File saved:", noisy_filepath)
 
   # Save clean speech with desired naming format (optional)
-  clean_filepath = f"{clean_dir}\\{clear_file_code}_{noise_file_code}.wav"
+  clean_filepath = f"{clean_dir}\\{clear_file_code}.wav"
   tf.io.write_file(clean_filepath, contents=tf.audio.encode_wav(tf.expand_dims(audio_clear, axis=-1), sample_rate=audioSR_clear))
   print("File saved:", clean_filepath)
