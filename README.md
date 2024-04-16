@@ -3,7 +3,7 @@ Test task for VK R&amp;D internship. For explination and rewiev in russian see [
 
 # Installation
 
-### for Data and pretrained model go to [Disc]()
+### for Data and pretrained model go to [Yandex Disc](https://disk.yandex.ru/d/dglhBJF_MW0hrQ)
 
 ### clone repository or download needed files to start training from ground zero. then:
 
