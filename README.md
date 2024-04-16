@@ -1,5 +1,5 @@
 # DenseNoiser
-Test task for VK R&amp;D internship. For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
+##Test task for VK R&amp;D internship. For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
 
 # Installation
 
