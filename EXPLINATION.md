@@ -81,7 +81,6 @@ DenseNet демонстрирует хорошие результаты на р�
 
 ![Архитектура](/model_densenet.png)
 
-
 Код для смешивания аудио [NoisyDataMaker.py](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/NoisyDataMaker.py)
 Код для тренировки модели вместе с её архитектурой [ArchitectureAndTraining.py](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/ArchitectureAndTraining.py)
 К сожалению, нормальное demo для *realtime* шумоподавления с микрофона я сделать не успел, но попытку можно найти [на диске](https://disk.yandex.ru/d/dglhBJF_MW0hrQ)
