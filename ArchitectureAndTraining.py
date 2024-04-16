@@ -8,21 +8,26 @@ import glob
 import os
 import matplotlib.pyplot as plt
 import random
-from tensorflow.python.client import device_lib
 
 #GPU memory smol proceed with CPU + RAM
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-model_name = "DenseNoise"
+clear_files = glob.glob(r'F:\Sound\speech\*wav')
+
+model_name = "DenseNoisePic"
 block_length = 0.050  
 voice_max_length = int(0.5 / block_length)  
 frame_length = 512
-batch_size = 5000
+batch_size = 1000
 epochs = 1
 
 #learning_rate = 0.003#default is 0.001 ---> too long ad seems to be stuck
 optimiser = tf.keras.optimizers.Adadelta()
 #optimiser.learning_rate.assign(0.003)
+# Growth rate for each dense block
+growth_rate = 32  
+#number of layers per dense block
+num_layers_per_block = 4  
 
 random.seed(42)
 np.random.seed(42)
@@ -116,9 +121,6 @@ class MySequence(tf.keras.utils.Sequence):
         return batch_x_train, batch_y_train
     
 ##### main logic #####
-
-clear_files = glob.glob(r'F:\Sound\speech\*wav')
-
 x_train = []
 x_train_count = 0
 
@@ -199,12 +201,6 @@ else:
     #linear transformation of data
     x = Conv1D(1, kernel_size=1, padding='same')(x) 
     # Dense blocks with transition blocks in between
-    # Growth rate for each dense block
-    growth_rate = 32  
-    #number of layers per dense block
-    num_layers_per_block = 4  
-
-    
     x = dense_block(x, growth_rate, num_layers_per_block)
     x = transition_block(x)
     x = dense_block(x, growth_rate, num_layers_per_block)
