@@ -1,6 +1,11 @@
 # DenseNoiser
 Test task for VK R&amp;D internship. For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
 
+# Installation
+
+### for Data and pretrained model go to [Disc]()
+
+### clone repository or download needed files to start training from ground zero. then:
 
 $ conda create --name <env_name> python=3.8
 pip install -r requirements.txt 
