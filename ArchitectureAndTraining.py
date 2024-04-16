@@ -103,7 +103,7 @@ class MySequence(tf.keras.utils.Sequence):
         current_size = 0
         while current_size < batch_size:
             path_clear, _ = self.x_train[(idx * self.batch_size + current_size)%len(clear_files)]
-            path_noisy = path_clear.replace("clear", "noise")
+            path_noisy = path_clear.replace("speech", "noise")
             spectNoisy, _, _, _ = audioToTensor(path_noisy)
             spectClear, _, _, _ = audioToTensor(path_clear) 
             #print(f"batch_x_train: {batch_x_train.shape}, spectNoisy.shape: {spectNoisy.shape}")
