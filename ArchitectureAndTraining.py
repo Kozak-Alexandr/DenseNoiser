@@ -13,16 +13,16 @@ from tensorflow.python.client import device_lib
 #GPU memory smol proceed with CPU + RAM
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-model_name = "DenseNetNoise"
+model_name = "DenseNoise"
 block_length = 0.050  
 voice_max_length = int(0.5 / block_length)  
 frame_length = 512
 batch_size = 2048
-epochs = 2
+epochs = 3
 
 #learning_rate = 0.003#default is 0.001 ---> too long ad seems to be stuck
-optimiser = tf.keras.optimizers.Adam()
-optimiser.learning_rate.assign(0.003)
+optimiser = tf.keras.optimizers.Adadelta()
+#optimiser.learning_rate.assign(0.003)
 
 random.seed(42)
 np.random.seed(42)
@@ -103,9 +103,10 @@ class MySequence(tf.keras.utils.Sequence):
         current_size = 0
         while current_size < batch_size:
             path_clear, _ = self.x_train[(idx * self.batch_size + current_size)%len(clear_files)]
-            path_noisy = path_clear.replace("clear", "noisy")
+            path_noisy = path_clear.replace("clear", "noise")
             spectNoisy, _, _, _ = audioToTensor(path_noisy)
             spectClear, _, _, _ = audioToTensor(path_clear) 
+            #print(f"batch_x_train: {batch_x_train.shape}, spectNoisy.shape: {spectNoisy.shape}")
             for k in range(0, len(spectNoisy)):
                 batch_x_train[current_size] = spectNoisy[k]
                 batch_y_train[current_size] = spectClear[k]
@@ -116,10 +117,11 @@ class MySequence(tf.keras.utils.Sequence):
     
 ##### main logic #####
 
-clear_files = glob.glob(r'F:\Sound\output\*wav')
+clear_files = glob.glob(r'F:\Sound\speech\*wav')
 
 x_train = []
 x_train_count = 0
+
 for i, path_clear in enumerate(clear_files):
     spectNoisy, _, _, audioNoisySR = audioToTensor(path_clear)
     x_train.append((path_clear, len(spectNoisy)))
@@ -130,6 +132,12 @@ print("x_train_count:", x_train_count)
 train_data_generator = MySequence(x_train, x_train_count, batch_size, is_noisy=True)
 
 print('Build model...')
+#print(path_clear)
+#print(path_noisy)
+#for noisy, clean in train_data_generator:
+#    print(noisy[0])
+#    break
+
 if os.path.exists(model_name):
     print("Load: " + model_name)
     model = load_model(model_name)
@@ -193,8 +201,8 @@ else:
     # Dense blocks with transition blocks in between
     # Growth rate for each dense block
     growth_rate = 32  
-    # Number of layers per dense block
-    num_layers_per_block = 3  
+    #number of layers per dense block
+    num_layers_per_block = 4  
 
     
     x = dense_block(x, growth_rate, num_layers_per_block)
