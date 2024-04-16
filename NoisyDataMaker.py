@@ -33,8 +33,6 @@ for clear_filepath in clean_files:
     # Truncate noise if it's too long
     audio_noise = audio_noise[0:len(audio_clear)]
 
-    # ... rest of your noise processing logic here ... (e.g., scaling noise volume)
-
     audio_with_noise = tf.math.add(audio_clear, audio_noise)
     audio_with_noise = tf.expand_dims(audio_with_noise, axis=-1)
 
