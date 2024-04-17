@@ -44,7 +44,7 @@ for clear_filepath in clean_files:
     audio_string = tf.audio.encode_wav(audio_with_noise, sample_rate=audioSR_clear)
 
     # Save noisy speech with specific naming format
-    noisy_filepath = f"{noise_dir}\\{clear_file_code}.wav"
+    noisy_filepath = f"{noise_dir}\\{noise_file_code}.wav"
     tf.io.write_file(noisy_filepath, contents=audio_string)
     print("File saved:", noisy_filepath)
 
