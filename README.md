@@ -1,5 +1,6 @@
 # DenseNoiser
-## Test task for VK R&amp;D internship. 
+## Noise cancellation model
+with this project i wanted to better understand voice enhancement models and made my own
 ## For explination and rewiev in russian see [EXPLINATION.md](https://github.com/Kozak-Alexandr/DenseNoiser/blob/main/EXPLINATION.md)
 
 # Installation
